@@ -5,4 +5,5 @@
 ![use-case-2](https://user-images.githubusercontent.com/20500388/158004872-b925ddcd-d8fa-4516-b04e-a182c29bba20.png)
 
 ## Entity overview
-![entity-overview](https://user-images.githubusercontent.com/20500388/158004874-4ab623f0-1f7d-4703-8908-f4872e2a22a3.png)
+![entity-overview](https://user-images.githubusercontent.com/20500388/158006406-782f7303-964b-447f-ac01-daf7d50e9ca9.png)
+
