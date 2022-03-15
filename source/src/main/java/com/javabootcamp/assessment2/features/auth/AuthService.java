@@ -10,7 +10,8 @@ import java.util.Date;
 @Service
 public class AuthService {
 
-    private static final int JWT_TOKEN_VALIDITY =  60 * 60 * 1000;
+    private static final int JWT_TOKEN_USER_VALIDITY =  60 * 60 * 1000;
+    private static final int JWT_TOKEN_IOT_VALIDITY =  60 * 60 * 10000;
 
     @Autowired
     private AuthRepository authRepository;
@@ -26,9 +27,16 @@ public class AuthService {
             throw new UserPasswordInvalidException("Password invalid.");
         }
 
+        Date expiredDate = null;
+        if (user.isIoT()) {
+            expiredDate = new Date(System.currentTimeMillis() + JWT_TOKEN_IOT_VALIDITY);
+        }
+        else {
+            expiredDate = new Date(System.currentTimeMillis() + (JWT_TOKEN_USER_VALIDITY));
+        }
         var response = new AuthResponse();
-        response.setExpiredDate(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY));
-        response.setToken(JwtUtil.generateToken(user, response.getExpiredDate()));
+        response.setExpiredDate(expiredDate);
+        response.setToken(JwtUtil.generateToken(user, expiredDate));
         return response;
     }
 }

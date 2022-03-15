@@ -28,4 +28,8 @@ public class User {
     private String username;
     private String password;
     private UserRole userRole;
+
+    public Boolean isIoT() {
+        return userRole == UserRole.IoT;
+    }
 }

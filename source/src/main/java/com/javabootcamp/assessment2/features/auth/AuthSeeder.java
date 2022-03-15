@@ -20,9 +20,11 @@ public class AuthSeeder {
         var driver = new User("driver", hashPassword, UserRole.Driver);
         var branch = new User("branch", hashPassword, UserRole.Branch);
         var cashCenter = new User("cashcenter", hashPassword, UserRole.CashCenter);
+        var ioT = new User("iot", hashPassword, UserRole.IoT);
 
         authRepository.save(driver);
         authRepository.save(branch);
         authRepository.save(cashCenter);
+        authRepository.save(ioT);
     }
 }

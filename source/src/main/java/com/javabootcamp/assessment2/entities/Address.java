@@ -15,8 +15,8 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String Latitude;
-    private String Longitude;
-    private String EmailAddress;
-    private String PhoneNumber;
+    private String latitude;
+    private String longitude;
+    private String emailAddress;
+    private String phoneNumber;
 }

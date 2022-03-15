@@ -4,5 +4,6 @@ public enum UserRole {
     Unknown,
     Driver,
     Branch,
-    CashCenter
+    CashCenter,
+    IoT
 }
