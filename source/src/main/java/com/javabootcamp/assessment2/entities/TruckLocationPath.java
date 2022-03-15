@@ -9,11 +9,11 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class TruckLocation {
+public class TruckLocationPath {
 
-    public TruckLocation() {}
+    public TruckLocationPath() {}
 
-    public TruckLocation(String latitude, String longitude) {
+    public TruckLocationPath(String latitude, String longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }

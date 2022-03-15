@@ -67,7 +67,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     private boolean checkAuthorizedUser(HttpServletRequest request, User currentUser) {
         String path = request.getServletPath().replace(API_SECURE, "").toLowerCase();
         if (currentUser.isIoT()) {
-            var routes = new String[] {"trucklocations"};
+            var routes = new String[] {"trucklocationpaths"};
             return Arrays.asList(routes).contains(path);
         }
         return false;
