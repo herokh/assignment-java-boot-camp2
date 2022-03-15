@@ -32,4 +32,16 @@ public class User {
     public Boolean isIoT() {
         return userRole == UserRole.IoT;
     }
+
+    public Boolean isBranchUser() {
+        return userRole == UserRole.Branch;
+    }
+
+    public Boolean isCashCenterUser() {
+        return userRole == UserRole.CashCenter;
+    }
+
+    public Boolean isDriverUser() {
+        return userRole == UserRole.Driver;
+    }
 }

@@ -64,10 +64,19 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         return !shouldFilter;
     }
 
+    // TODO: I don't know how to make it better... but this is the fastest way for now.
     private boolean checkAuthorizedUser(HttpServletRequest request, User currentUser) {
-        String path = request.getServletPath().replace(API_SECURE, "").toLowerCase();
+        String path = request.getServletPath().replace(API_SECURE, "").split("/")[0].toLowerCase();
         if (currentUser.isIoT()) {
             var routes = new String[] {"trucklocationpaths"};
+            return Arrays.asList(routes).contains(path);
+        }
+        else if (currentUser.isBranchUser()) {
+            var routes = new String[] {"assets"};
+            return Arrays.asList(routes).contains(path);
+        }
+        else if (currentUser.isCashCenterUser()) {
+            var routes = new String[] {"assets"};
             return Arrays.asList(routes).contains(path);
         }
         return false;
