@@ -10,11 +10,11 @@ public class TruckLocationPathService {
     @Autowired
     private TruckLocationPathRepository truckLocationPathRepository;
 
-    public TruckLocationPathResponse saveTruckLocationPath(TruckLocationPathRequest truckLocationPathRequest) {
+    public TruckLocationPathResponse saveTruckLocationPath(CreateTruckLocationPathRequest createTruckLocationPathRequest) {
         try {
             // TODO: Get shipment by device id.
 
-            var entity = new TruckLocationPath(truckLocationPathRequest.getLatitude(), truckLocationPathRequest.getLongitude());
+            var entity = new TruckLocationPath(createTruckLocationPathRequest.getLatitude(), createTruckLocationPathRequest.getLongitude());
             truckLocationPathRepository.save(entity);
             return new TruckLocationPathResponse(true);
         }

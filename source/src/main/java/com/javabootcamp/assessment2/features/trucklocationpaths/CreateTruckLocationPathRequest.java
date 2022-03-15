@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class TruckLocationPathRequest {
+public class CreateTruckLocationPathRequest {
     private UUID deviceId;
     private String latitude;
     private String longitude;

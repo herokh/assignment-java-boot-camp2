@@ -14,8 +14,8 @@ public class TruckLocationPathsController extends SecuredRestController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public TruckLocationPathResponse saveTruckLocation(@RequestBody TruckLocationPathRequest truckLocationPathRequest) {
-        TruckLocationPathResponse truckLocationPathResponse = truckLocationPathService.saveTruckLocationPath(truckLocationPathRequest);
+    public TruckLocationPathResponse saveTruckLocation(@RequestBody CreateTruckLocationPathRequest createTruckLocationPathRequest) {
+        TruckLocationPathResponse truckLocationPathResponse = truckLocationPathService.saveTruckLocationPath(createTruckLocationPathRequest);
         return truckLocationPathResponse;
     }
 }
