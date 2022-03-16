@@ -29,7 +29,7 @@ public class Shipment {
     private UUID receiverId;
     private UUID driverId;
     private UUID truckId;
-    private UUID ioTdeviceId;
+    private UUID deviceId;
     private ShipmentType shipmentType;
 
     private Date insertedDate;
