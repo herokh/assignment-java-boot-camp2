@@ -1,4 +1,4 @@
-package com.javabootcamp.assessment2.features.assets;
+package com.javabootcamp.assessment2.features.asset;
 
 import com.javabootcamp.assessment2.entities.Asset;
 import org.springframework.data.jpa.repository.JpaRepository;

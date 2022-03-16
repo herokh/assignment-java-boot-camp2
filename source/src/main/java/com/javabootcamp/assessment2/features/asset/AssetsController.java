@@ -1,4 +1,4 @@
-package com.javabootcamp.assessment2.features.assets;
+package com.javabootcamp.assessment2.features.asset;
 
 import com.javabootcamp.assessment2.controllers.SecuredRestController;
 import org.springframework.beans.factory.annotation.Autowired;
