@@ -1,4 +1,4 @@
-package com.javabootcamp.assessment2.features.trucklocationpaths;
+package com.javabootcamp.assessment2.features.trucklocationpath;
 
 import com.javabootcamp.assessment2.views.ErrorResponse;
 import org.springframework.http.HttpStatus;

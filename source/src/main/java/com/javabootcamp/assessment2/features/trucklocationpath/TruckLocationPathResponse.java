@@ -1,4 +1,4 @@
-package com.javabootcamp.assessment2.features.trucklocationpaths;
+package com.javabootcamp.assessment2.features.trucklocationpath;
 
 import lombok.Getter;
 import lombok.Setter;

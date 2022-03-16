@@ -1,4 +1,4 @@
-package com.javabootcamp.assessment2.features.trucklocationpaths;
+package com.javabootcamp.assessment2.features.trucklocationpath;
 
 import com.javabootcamp.assessment2.entities.Shipment;
 import com.javabootcamp.assessment2.entities.TruckLocationPath;
@@ -19,7 +19,7 @@ public class TruckLocationPathService {
         try {
             Shipment shipment = shipmentRepository.findByDeviceId(createTruckLocationPathRequest.getDeviceId());
             var entity = new TruckLocationPath(
-                    shipment.getId(),
+                    shipment,
                     createTruckLocationPathRequest.getLatitude(),
                     createTruckLocationPathRequest.getLongitude());
             truckLocationPathRepository.save(entity);
