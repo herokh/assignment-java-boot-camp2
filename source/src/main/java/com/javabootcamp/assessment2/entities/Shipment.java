@@ -23,15 +23,15 @@ public class Shipment {
     private String destinationLat;
     private String destinationLng;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "driver_id")
     private Driver driver;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "truck_id")
     private Truck truck;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "device_id")
     private Device device;
 

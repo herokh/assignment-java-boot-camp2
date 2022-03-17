@@ -15,7 +15,9 @@ public class Branch{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne
+    private String name;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_ID")
     private Address address;
 }

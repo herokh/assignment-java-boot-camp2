@@ -16,6 +16,7 @@ import com.javabootcamp.assessment2.features.truck.TruckNotFoundException;
 import com.javabootcamp.assessment2.features.truck.TruckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -39,7 +40,8 @@ public class ShipmentService {
     @Autowired
     private ApplicationContext applicationContext;
 
-    public void createShipment(CreateShipmentRequest createShipmentRequest){
+    @Transactional
+    public UUID createShipment(CreateShipmentRequest createShipmentRequest){
         Shipment shipment = new Shipment();
 
         setSenderReceiverShipment(createShipmentRequest, shipment);
@@ -60,7 +62,10 @@ public class ShipmentService {
         shipment.setInsertedDate(now);
         shipment.setInsertedBy(currentUser.getId());
 
-        shipmentRepository.save(shipment);
+        var result = shipmentRepository.save(shipment);
+        updateStatus(shipment.getId(), ShipmentStatus.Prepare);
+
+        return result.getId();
     }
 
     private void setSenderReceiverShipment(CreateShipmentRequest createShipmentRequest, Shipment shipment) {

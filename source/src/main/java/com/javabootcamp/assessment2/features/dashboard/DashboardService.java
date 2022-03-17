@@ -1,20 +1,18 @@
 package com.javabootcamp.assessment2.features.dashboard;
 
-import com.javabootcamp.assessment2.entities.Address;
-import com.javabootcamp.assessment2.entities.Asset;
 import com.javabootcamp.assessment2.entities.Shipment;
-import com.javabootcamp.assessment2.entities.TruckLocationPath;
 import com.javabootcamp.assessment2.features.asset.AssetRepository;
 import com.javabootcamp.assessment2.features.cashcenter.CashCenterRepository;
-import com.javabootcamp.assessment2.features.shipment.ShipmentTypeInvalidException;
+import com.javabootcamp.assessment2.features.currencyrate.CurrencyRateRepository;
+import com.javabootcamp.assessment2.features.currencyrate.CurrencyRateService;
 import com.javabootcamp.assessment2.features.shipment.ShipmentNotFoundException;
 import com.javabootcamp.assessment2.features.shipment.ShipmentRepository;
+import com.javabootcamp.assessment2.features.shipment.ShipmentTypeInvalidException;
 import com.javabootcamp.assessment2.features.trucklocationpath.TruckLocationPathRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -29,6 +27,10 @@ public class DashboardService {
     private CashCenterRepository cashCenterRepository;
     @Autowired
     private AssetRepository assetRepository;
+    @Autowired
+    private CurrencyRateRepository currencyRateRepository;
+    @Autowired
+    private CurrencyRateService currencyRateService;
 
     public DashboardResponse getDashboardOverview(UUID shipmentId) {
         Shipment shipment = shipmentRepository.findById(shipmentId)
@@ -42,9 +44,13 @@ public class DashboardService {
         dashboardResponse.setCashCenterLatitude(cashCenterAddress.get("lat"));
         dashboardResponse.setCashCenterLongitude(cashCenterAddress.get("lng"));
         var assets = assetRepository.findAllByShipmentId(shipmentId);
-        var totalBalances = assets.stream()
-                .map(x -> x.getAmount())
-                .reduce(0d, (a, b) -> a + b);
+        var rates = currencyRateRepository.findAll();
+        var totalBalances = 0d;
+        for (var asset : assets) {
+            double balanceTHB = currencyRateService.convertCurrencyAmountToTHB(
+                    rates, asset.getCurrency(), asset.getAmount());
+            totalBalances += balanceTHB;
+        }
         dashboardResponse.setTotalBalances(totalBalances);
 
         return dashboardResponse;

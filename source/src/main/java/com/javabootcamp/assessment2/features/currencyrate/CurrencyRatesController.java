@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/secure/currencyrates")
-public class CurrencyRatesController extends SecuredRestController {
+@RequestMapping("/api/currencyrates")
+public class CurrencyRatesController{
 
     @Autowired
     private CurrencyRateService currencyRateService;

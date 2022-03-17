@@ -14,4 +14,6 @@ public class Driver {
     @Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    private String name;
 }

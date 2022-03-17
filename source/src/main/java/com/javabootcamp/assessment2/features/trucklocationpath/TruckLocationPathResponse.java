@@ -6,9 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TruckLocationPathResponse {
-    public TruckLocationPathResponse(Boolean success) {
-        this.success = success;
-    }
-
-    private Boolean success;
+    private boolean success;
 }

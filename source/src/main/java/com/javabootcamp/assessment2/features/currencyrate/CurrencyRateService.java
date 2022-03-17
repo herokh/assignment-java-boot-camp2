@@ -5,11 +5,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class CurrencyRateService {
 
     @Autowired
     private CurrencyRateRepository currencyRateRepository;
+
+    public double convertCurrencyAmountToTHB(List<CurrencyRate> rates, String fromCurrency, double amount) {
+        if (fromCurrency.equals(CurrencyCodeConst.THB)) {
+            return amount;
+        }
+        else {
+            var expectedRate = rates.stream()
+                    .filter(x -> x.getCode().equals(fromCurrency))
+                    .findFirst()
+                    .orElseThrow(() -> new CurrencyRateNotFoundException("currency rate not found."));
+            return expectedRate.getRate() * amount;
+        }
+    }
 
     @Transactional
     public void saveRates(CurrencyRatesRequest currencyRatesRequest) {

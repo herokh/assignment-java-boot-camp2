@@ -25,8 +25,17 @@ public class AssetsController extends SecuredRestController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public AssetListResponse getAssets(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date insertedDate) throws ExecutionException, InterruptedException {
-        return assetService.getAssetsByInsertedDate(insertedDate);
+    public AssetListResponse getAssetsByInsertedDate(
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date insertedDate,
+            @RequestParam(required = false) UUID shipmentId) throws ExecutionException, InterruptedException {
+        if (shipmentId != null) {
+            return assetService.getAssetsByShipmentId(shipmentId);
+        }
+
+        if (insertedDate != null) {
+            return assetService.getAssetsByInsertedDate(insertedDate);
+        }
+        return null;
     }
 
     @GetMapping(value = "/{assetId}")

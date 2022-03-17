@@ -71,12 +71,16 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             var routes = new String[] {"trucklocationpaths"};
             return Arrays.asList(routes).contains(path);
         }
+        else if (currentUser.isDriverUser()) {
+            var routes = new String[] {"shipmentstatushistories"};
+            return Arrays.asList(routes).contains(path);
+        }
         else if (currentUser.isBranchUser()) {
-            var routes = new String[] {"assets", "accountingreports"};
+            var routes = new String[] {"shipments", "assets", "dashboard", "accountingreports"};
             return Arrays.asList(routes).contains(path);
         }
         else if (currentUser.isCashCenterUser()) {
-            var routes = new String[] {"assets", "accountingreports"};
+            var routes = new String[] {"shipments", "assets", "dashboard", "accountingreports"};
             return Arrays.asList(routes).contains(path);
         }
         return false;
