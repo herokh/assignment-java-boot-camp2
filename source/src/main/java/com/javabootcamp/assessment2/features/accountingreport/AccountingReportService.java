@@ -1,7 +1,7 @@
-package com.javabootcamp.assessment2.features.balanceadjustmentbatch;
+package com.javabootcamp.assessment2.features.accountingreport;
 
 import com.javabootcamp.assessment2.entities.Asset;
-import com.javabootcamp.assessment2.entities.BalanceAdjustmentBatch;
+import com.javabootcamp.assessment2.entities.AccountingReport;
 import com.javabootcamp.assessment2.enums.BatchStatus;
 import com.javabootcamp.assessment2.features.asset.AssetRepository;
 import com.javabootcamp.assessment2.features.filegenerator.CsvFileGeneratorServiceImpl;
@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Service
-public class BalanceAdjustmentBatchService {
+public class AccountingReportService {
 
     @Autowired
-    private BalanceAdjustmentBatchRepository balanceAdjustmentBatchRepository;
+    private AccountingReportRepository accountingReportRepository;
 
     @Autowired
     private SftpFileTransferServiceImpl fileTransferService;
@@ -29,7 +29,7 @@ public class BalanceAdjustmentBatchService {
     private AssetRepository assetRepository;
 
     public void processBatchesToSftp(Date adjustDate) {
-        BalanceAdjustmentBatch result = new BalanceAdjustmentBatch();
+        AccountingReport result = new AccountingReport();
         result.setAdjustDate(adjustDate);
 
         try {
@@ -50,7 +50,7 @@ public class BalanceAdjustmentBatchService {
             result.setErrorReason(e.getMessage());
         }
 
-        balanceAdjustmentBatchRepository.save(result);
+        accountingReportRepository.save(result);
     }
 
     private String[] mapToStringArray(Asset asset) {

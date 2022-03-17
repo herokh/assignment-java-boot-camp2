@@ -11,7 +11,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class BalanceAdjustmentBatch {
+public class AccountingReport {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
