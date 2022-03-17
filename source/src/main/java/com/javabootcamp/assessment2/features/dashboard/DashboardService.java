@@ -13,7 +13,9 @@ import com.javabootcamp.assessment2.features.trucklocationpath.TruckLocationPath
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -37,8 +39,8 @@ public class DashboardService {
         dashboardResponse.setTruckLatitude(currentLocation.getLatitude());
         dashboardResponse.setTruckLongitude(currentLocation.getLongitude());
         var cashCenterAddress = getCashCenterAddress(shipment);
-        dashboardResponse.setCashCenterLatitude(cashCenterAddress.getLatitude());
-        dashboardResponse.setCashCenterLongitude(cashCenterAddress.getLongitude());
+        dashboardResponse.setCashCenterLatitude(cashCenterAddress.get("lat"));
+        dashboardResponse.setCashCenterLongitude(cashCenterAddress.get("lng"));
         var assets = assetRepository.findAllByShipmentId(shipmentId);
         var totalBalances = assets.stream()
                 .map(x -> x.getAmount())
@@ -48,19 +50,25 @@ public class DashboardService {
         return dashboardResponse;
     }
 
-    private Address getCashCenterAddress(Shipment shipment) {
-        Address cashCenterAddress = null;
+    private Map<String, String> getCashCenterAddress(Shipment shipment) {
+        Map<String, String> location = new HashMap<>();
         switch (shipment.getShipmentType()){
             case BranchToCashCenter:
-                cashCenterAddress = shipment.getDestination();
+                location.put("lat",
+                        shipment.getDestinationLat());
+                location.put("lng",
+                        shipment.getDestinationLng());
                 break;
             case CashCenterToBranch:
-                cashCenterAddress = shipment.getOrigin();
+                location.put("lat",
+                        shipment.getOriginLat());
+                location.put("lng",
+                        shipment.getOriginLng());
                 break;
             default:
                 throw new ShipmentTypeInvalidException("Shipment type is not support.");
         }
-        return cashCenterAddress;
+        return location;
     }
 
 }

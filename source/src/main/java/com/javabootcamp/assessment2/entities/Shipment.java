@@ -17,24 +17,28 @@ public class Shipment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "origin_id")
-    private Address origin;
+    private String originLat;
+    private String originLng;
+
+    private String destinationLat;
+    private String destinationLng;
 
     @OneToOne
-    @JoinColumn(name = "destination_id")
-    private Address destination;
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
+
+    @OneToOne
+    @JoinColumn(name = "truck_id")
+    private Truck truck;
+
+    @OneToOne
+    @JoinColumn(name = "device_id")
+    private Device device;
 
     private UUID senderId;
     private UUID receiverId;
-    private UUID driverId;
-    private UUID truckId;
-    private UUID deviceId;
     private ShipmentType shipmentType;
 
     private Date insertedDate;
     private UUID insertedBy;
-
-    private Date updatedDate;
-    private UUID updatedBy;
 }
