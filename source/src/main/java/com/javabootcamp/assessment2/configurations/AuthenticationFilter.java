@@ -72,11 +72,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             return Arrays.asList(routes).contains(path);
         }
         else if (currentUser.isBranchUser()) {
-            var routes = new String[] {"assets"};
+            var routes = new String[] {"assets", "accountingreports"};
             return Arrays.asList(routes).contains(path);
         }
         else if (currentUser.isCashCenterUser()) {
-            var routes = new String[] {"assets"};
+            var routes = new String[] {"assets", "accountingreports"};
             return Arrays.asList(routes).contains(path);
         }
         return false;

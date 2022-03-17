@@ -1,6 +1,5 @@
 package com.javabootcamp.assessment2.features.dashboard;
 
-import com.javabootcamp.assessment2.features.asset.AssetNotFoundException;
 import com.javabootcamp.assessment2.features.shipment.ShipmentNotFoundException;
 import com.javabootcamp.assessment2.features.shipment.ShipmentTypeInvalidException;
 import com.javabootcamp.assessment2.views.ErrorResponse;

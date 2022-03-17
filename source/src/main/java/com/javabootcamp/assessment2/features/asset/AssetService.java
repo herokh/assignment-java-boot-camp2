@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class AssetService {
@@ -22,8 +23,8 @@ public class AssetService {
         return entity.getId();
     }
 
-    public AssetListResponse getAssetsByInsertedDate(Date insertedDate) {
-        var result = assetRepository.findAllByInsertedDate(insertedDate);
+    public AssetListResponse getAssetsByInsertedDate(Date insertedDate) throws ExecutionException, InterruptedException {
+        var result = assetRepository.findAllByInsertedDate(insertedDate).get();
         var response = mapToAssetListResponse(result);
         return response;
     }

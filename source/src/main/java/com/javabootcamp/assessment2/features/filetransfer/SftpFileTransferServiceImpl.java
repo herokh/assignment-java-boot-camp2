@@ -36,14 +36,15 @@ public class SftpFileTransferServiceImpl implements FileTransferService {
         ChannelSftp channelSftp = null;
         try {
             channelSftp = createChannelSftp();
-            channelSftp.put(localInputStream, remoteFilePath);
-            return true;
-        } catch(SftpException ex) {
-            logger.error("Error upload file", ex);
+            if (channelSftp != null) {
+                channelSftp.put(localInputStream, remoteFilePath);
+                return true;
+            }
+        } catch(SftpException e) {
+            logger.error("Error upload file", e);
         } finally {
             disconnectChannelSftp(channelSftp);
         }
-
         return false;
     }
 

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api/secure/assets")
@@ -24,7 +25,7 @@ public class AssetsController extends SecuredRestController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public AssetListResponse getAssets(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date insertedDate) {
+    public AssetListResponse getAssets(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date insertedDate) throws ExecutionException, InterruptedException {
         return assetService.getAssetsByInsertedDate(insertedDate);
     }
 
