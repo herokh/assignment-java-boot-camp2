@@ -32,6 +32,17 @@ public class DashboardService {
     @Autowired
     private CurrencyRateService currencyRateService;
 
+    public DashboardService(ShipmentRepository shipmentRepository, TruckLocationPathRepository truckLocationPathRepository, CashCenterRepository cashCenterRepository, AssetRepository assetRepository, CurrencyRateRepository currencyRateRepository, CurrencyRateService currencyRateService) {
+        this.shipmentRepository = shipmentRepository;
+        this.truckLocationPathRepository = truckLocationPathRepository;
+        this.cashCenterRepository = cashCenterRepository;
+        this.assetRepository = assetRepository;
+        this.currencyRateRepository = currencyRateRepository;
+        this.currencyRateService = currencyRateService;
+    }
+
+    public DashboardService(){}
+
     public DashboardResponse getDashboardOverview(UUID shipmentId) {
         Shipment shipment = shipmentRepository.findById(shipmentId)
                 .orElseThrow(() -> new ShipmentNotFoundException("Shipment not found."));

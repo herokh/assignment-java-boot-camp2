@@ -40,6 +40,19 @@ public class ShipmentService {
     @Autowired
     private ApplicationContext applicationContext;
 
+    public ShipmentService(DriverRepository driverRepository, DeviceRepository deviceRepository, TruckRepository truckRepository, BranchRepository branchRepository, CashCenterRepository cashCenterRepository, ShipmentRepository shipmentRepository, ShipmentStatusHistoryRepository shipmentStatusHistoryRepository, ApplicationContext applicationContext) {
+        this.driverRepository = driverRepository;
+        this.deviceRepository = deviceRepository;
+        this.truckRepository = truckRepository;
+        this.branchRepository = branchRepository;
+        this.cashCenterRepository = cashCenterRepository;
+        this.shipmentRepository = shipmentRepository;
+        this.shipmentStatusHistoryRepository = shipmentStatusHistoryRepository;
+        this.applicationContext = applicationContext;
+    }
+
+    public ShipmentService(){}
+
     @Transactional
     public UUID createShipment(CreateShipmentRequest createShipmentRequest){
         Shipment shipment = new Shipment();

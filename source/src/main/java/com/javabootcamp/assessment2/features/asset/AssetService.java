@@ -13,6 +13,12 @@ public class AssetService {
     @Autowired
     private AssetRepository assetRepository;
 
+    public AssetService(AssetRepository assetRepository) {
+        this.assetRepository = assetRepository;
+    }
+
+    public AssetService(){}
+
     public UUID createAsset(CreateAssetRequest createAssetRequest) {
         Asset entity = new Asset();
         entity.setAmount(createAssetRequest.getAmount());

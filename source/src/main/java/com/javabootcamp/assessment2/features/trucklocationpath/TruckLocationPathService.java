@@ -16,6 +16,13 @@ public class TruckLocationPathService {
     @Autowired
     private TruckLocationPathRepository truckLocationPathRepository;
 
+    public TruckLocationPathService(ShipmentRepository shipmentRepository, TruckLocationPathRepository truckLocationPathRepository) {
+        this.shipmentRepository = shipmentRepository;
+        this.truckLocationPathRepository = truckLocationPathRepository;
+    }
+
+    public TruckLocationPathService(){}
+
     public TruckLocationPathResponse saveTruckLocationPath(CreateTruckLocationPathRequest createTruckLocationPathRequest) {
         try {
             Shipment shipment = shipmentRepository.findById(createTruckLocationPathRequest.getShipmentId())

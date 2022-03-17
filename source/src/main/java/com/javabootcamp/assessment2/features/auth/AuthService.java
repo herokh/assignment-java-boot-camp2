@@ -16,6 +16,12 @@ public class AuthService {
     @Autowired
     private AuthRepository authRepository;
 
+    public AuthService(AuthRepository authRepository) {
+        this.authRepository = authRepository;
+    }
+
+    public AuthService(){}
+
     public AuthResponse signIn(AuthRequest authRequest) {
         var hasUser = authRepository.existsByUsername(authRequest.getUsername());
         if (!hasUser) {

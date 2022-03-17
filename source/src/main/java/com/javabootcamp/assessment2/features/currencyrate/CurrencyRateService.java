@@ -13,6 +13,12 @@ public class CurrencyRateService {
     @Autowired
     private CurrencyRateRepository currencyRateRepository;
 
+    public CurrencyRateService(CurrencyRateRepository currencyRateRepository) {
+        this.currencyRateRepository = currencyRateRepository;
+    }
+
+    public CurrencyRateService(){}
+
     public double convertCurrencyAmountToTHB(List<CurrencyRate> rates, String fromCurrency, double amount) {
         if (fromCurrency.equals(CurrencyCodeConst.THB)) {
             return amount;

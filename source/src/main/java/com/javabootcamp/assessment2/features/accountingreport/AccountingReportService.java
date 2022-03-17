@@ -33,6 +33,17 @@ public class AccountingReportService {
     @Autowired
     private AssetRepository assetRepository;
 
+    public AccountingReportService(AccountingReportRepository accountingReportRepository, SftpFileTransferServiceImpl fileTransferService, CsvFileGeneratorServiceImpl fileGeneratorService, AssetRepository assetRepository) {
+        this.accountingReportRepository = accountingReportRepository;
+        this.fileTransferService = fileTransferService;
+        this.fileGeneratorService = fileGeneratorService;
+        this.assetRepository = assetRepository;
+    }
+
+    public AccountingReportService(){
+
+    }
+
     @Async
     public CompletableFuture<AccountingReport> processAccountingReport(Date adjustDate) throws ExecutionException, InterruptedException {
 
