@@ -27,15 +27,16 @@
 | POST   | /api/auth/signin               | Log in                                                   | [Click](#post-auth)                  |
 | POST   | /api/TruckLocationPaths        | Save a truck location path for IoT devices               | [Click](#post-truck-location-paths)  |
 | POST   | /api/Shipments                 | Create new shipment                                      | [Click](#post-shipments)             |
-| GET    | /api/Shipments?created={date}  | Get shipment by created date                             | [Click](#get-shipments)              |
-| PUT    | /api/Shipments/{id}/status     | Update shipment status                                   | [Click](#put-shipment-status)        |
+| GET    | /api/Shipments?insertedDate={insertedDate}  | Get shipment by created date                             | [Click](#get-shipments)              |
+| GET    | /api/Shipments/{id}  | Get shipment by id                             | [Click](#get-shipments-single)              |
+| PUT    | /api/ShipmentStatusHistories?shipmentId={id}&status={newStatus}     | Update shipment status                                   | [Click](#put-shipment-status)        |
 | POST   | /api/Assets                    | Create new asset (QR Code generator)                     | [Click](#post-assets)                |
 | GET    | /api/Assets?shipmentId={id}    | List assets (for viewing as list)                        | [Click](#get-assets-listing)         |
 | GET    | /api/Assets/{id}               | Get a asset (QR Code reader)                             | [Click](#get-assets-single)          |
 | PUT    | /api/Assets/{id}               | Update asset                                             | [Click](#put-assets)                 |
 | GET    | /api/Dashboard?shipmentId={id} | Display dashboard for tracking the shipment              | [Click](#get-dashboard)              |
 | POST   | /api/CurrencyRates             | Receive currency rates from FXHub via webhook            | [Click](#post-currency-rates)        |
-| POST   | /api/CashAdjustmentBatches     | Create batch file as csv and send to RAE system via SFTP | [Click](#post-cash-adjustment-batches) |
+| POST   | /api/AccountingReports     | Create batch file as csv and send to RAE system via SFTP | [Click](#post-accounting-reports) |
 
 
 
@@ -71,9 +72,9 @@ Body
 
 ```json
 {
-   "deviceId": "248494ef-3fee-4905-a33f-08bf10c3215c",
-   "latitude": "13.7563",
-   "longitude": "100.5018"
+  "shipmentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "latitude": "string",
+  "longitude": "string"
 }
 ```
 
@@ -84,13 +85,12 @@ Body
 Body
 ```json
 {
-   "branchId": "c8cd6853-655b-4b21-8edd-f7f057ee1188",
-   "cashCenterId": "bd840288-034d-4c68-a46d-b809705c413c",
-   "driverId": "6f84ad6b-883b-4f8c-bbaa-a87751216e61",
-   "truckId": "f651735b-a100-43bc-bdc2-44dd670a3af2",
-   "deviceId": "248494ef-3fee-4905-a33f-08bf10c3215c",
-   "origin": "BRANCH | CASH_CENTER",
-   "destination": "BRANCH | CASH_CENTER"
+  "senderId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "receiverId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "driverId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "truckId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "deviceId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "shipmentType": "Unknown"
 }
 ```
 
@@ -103,34 +103,54 @@ Response
 
 ## Get shipment listing
 
-### <a name="get-shipments">GET /api/Shipments?created={date}</a>
+### <a name="get-shipments">GET /api/Shipments?insertedDate={insertedDate}</a>
 
 Response
 
 ```json
 {
-   "result": [
-      {
-         "id": "f84775c9-5c5a-494a-ad8d-12223ec67e34",
-         "created": "2022-03-12 15:00:00",
-         "createdBy": "Hero",
-         "updated": "2022-03-12 15:00:00",
-         "updatedBy": "Hero"
-      }
-   ]
+  "result": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "senderId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "receiverId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "shipmentType": "Unknown",
+      "inserted": "2022-03-18T05:53:16.362Z",
+      "insertedBy": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
+  ]
 }
 ```
-## Update shipment status
 
-### <a name="put-shipment-status">GET /api/Shipments/{id}/status</a>
+## Get shipment single
 
-Body
+### <a name="get-shipments-single">GET /api/Shipments/{id}</a>
+
+Response
 
 ```json
 {
-    "status": "PREPARE | SHIPPING | DONE"
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "truckId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "deviceId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "driverId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "senderId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "receiverId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "shipmentType": "Unknown",
+  "originLat": "string",
+  "originLng": "string",
+  "destinationLat": "string",
+  "destinationLng": "string",
+  "status": "Unknown",
+  "inserted": "2022-03-18T05:52:43.989Z",
+  "insertedBy": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 ```
+
+## Update shipment status
+
+### <a name="put-shipment-status">GET /api/ShipmentStatusHistories?shipmentId={id}&status={newStatus}</a>
+
 
 ## Create new asset
 
@@ -139,17 +159,15 @@ Body
 Body
 ```json
 {
-   "shipmentId": "58515770-95c8-4c08-ab09-317f2bbf171a",
-   "amount": 100,
-   "currency": "THB"
+  "shipmentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "amount": 0,
+  "currency": "string"
 }
 ```
 
 Response
 ```json
-{
-   "id": "11e368a9-a777-413f-8b35-4f1497ab4d7e"
-}
+3fa85f64-5717-4562-b3fc-2c963f66afa6
 ```
 
 ## Get asset listing
@@ -159,18 +177,13 @@ Response
 Response
 ```json
 {
-   "result": [
-      {
-         "id": "c3e3f4c9-5f36-4d22-91ef-263b2ebfeac7",
-         "amount": 100,
-         "currency": "THB"
-      },
-      {
-         "id": "2860a4da-93b3-4102-ba45-7bed1fa301f5",
-         "amount": 120,
-         "currency": "THB"
-      }
-   ]
+  "result": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "amount": 0,
+      "currency": "string"
+    }
+  ]
 }
 ```
 
@@ -181,9 +194,9 @@ Response
 
 ```json
 {
-   "id": "c3e3f4c9-5f36-4d22-91ef-263b2ebfeac7",
-   "amount": 100,
-   "currency": "THB"
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "amount": 0,
+  "currency": "string"
 }
 ```
 ## Update asset
@@ -194,8 +207,8 @@ Body
 
  ```json
 {
-   "amount": 200,
-   "currency": "THB"
+  "amount": 0,
+  "currency": "string"
 }
  ```
 
@@ -206,17 +219,13 @@ Body
 Response
 
 ```json
- {
-    "truckLocation": {
-       "latitude": "13.7563",
-       "longitude": "100.5018"
-    },
-   "destinationLocation": {
-      "latitude": "13.7563",
-      "longitude": "100.5018"
-   },
-   "totalAmount": 1000
- }
+{
+  "truckLatitude": "string",
+  "truckLongitude": "string",
+  "cashCenterLatitude": "string",
+  "cashCenterLongitude": "string",
+  "totalBalances": 0
+}
 ```
 
 
@@ -227,29 +236,26 @@ Response
 Body
 
 ```json
- {
-   "rates": [
-      {
-         "code": "USD",
-         "rate": 0.030
-      },
-      {
-         "code": "JPY",
-         "rate": 3.52
-      }
-   ]
- }
+{
+  "rates": [
+    {
+      "code": "string",
+      "rate": 0
+    }
+  ]
+}
 ```
 
 ## Send batch file to RAE system via SFTP
 
-### <a name="post-cash-adjustment-batches">POST /api/CashAdjustmentBatches</a>
+### <a name="post-accounting-reports">POST /api/AccountingReports</a>
 
 Body
 
 ```json
- {
-    "balanceDate": "2022-03-12"
- }
+{
+  "cancelled": true,
+  "done": true
+}
 ```
 
