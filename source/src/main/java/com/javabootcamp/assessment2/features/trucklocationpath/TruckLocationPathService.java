@@ -24,9 +24,10 @@ public class TruckLocationPathService {
     public TruckLocationPathService(){}
 
     public TruckLocationPathResponse saveTruckLocationPath(CreateTruckLocationPathRequest createTruckLocationPathRequest) {
+        Shipment shipment = shipmentRepository.findById(createTruckLocationPathRequest.getShipmentId())
+                .orElseThrow(() -> new ShipmentNotFoundException("Shipment not found"));
+
         try {
-            Shipment shipment = shipmentRepository.findById(createTruckLocationPathRequest.getShipmentId())
-                    .orElseThrow(() -> new ShipmentNotFoundException("Shipment not found"));
             var entity = new TruckLocationPath(
                     shipment,
                     createTruckLocationPathRequest.getLatitude(),

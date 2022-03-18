@@ -52,14 +52,14 @@ public class TruckLocationPathServiceTests {
     }
 
     @Test
-    @DisplayName("Verify saveTruckLocationPath that should be thrown SaveTruckLocationPathFailureException")
+    @DisplayName("Verify saveTruckLocationPath that should be thrown ShipmentNotFoundException")
     void test2() {
-        when(shipmentRepositoryMock.findById(Mockito.any())).thenReturn(null);
+        when(shipmentRepositoryMock.findById(Mockito.any())).thenReturn(Optional.ofNullable(null));
 
         var createTruckLocationPathRequest = new CreateTruckLocationPathRequest();
         createTruckLocationPathRequest.setShipmentId(UUID.randomUUID());
         createTruckLocationPathRequest.setLatitude("1234");
         createTruckLocationPathRequest.setLongitude("5678");
-        assertThrows(SaveTruckLocationPathFailureException.class, () -> testService.saveTruckLocationPath(createTruckLocationPathRequest));
+        assertThrows(ShipmentNotFoundException.class, () -> testService.saveTruckLocationPath(createTruckLocationPathRequest));
     }
 }
