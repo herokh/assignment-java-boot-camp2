@@ -18,12 +18,12 @@ public class CurrencyRateServiceTests {
     private CurrencyRateService testService;
 
     @Mock
-    private CurrencyRateRepository currencyRateRepository;
+    private CurrencyRateRepository currencyRateRepositoryMock;
 
     @BeforeEach
     void setup() {
 
-        testService = new CurrencyRateService(currencyRateRepository);
+        testService = new CurrencyRateService(currencyRateRepositoryMock);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class CurrencyRateServiceTests {
     }
 
     @Test
-    @DisplayName("Verify convertCurrencyAmountToTHB that should be throw CurrencyRateNotFoundException")
+    @DisplayName("Verify convertCurrencyAmountToTHB that should be thrown CurrencyRateNotFoundException")
     void test2() {
         var rates = new ArrayList<CurrencyRate>();
         var usdRate = new CurrencyRate();
