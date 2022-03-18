@@ -30,7 +30,7 @@ public class AssetService {
     }
 
     public AssetListResponse getAssetsByInsertedDate(Date insertedDate) throws ExecutionException, InterruptedException {
-        var result = assetRepository.findAllByInsertedDate(insertedDate).get();
+        var result = assetRepository.findAllByInsertedDate(insertedDate);
         var response = mapToAssetListResponse(result);
         return response;
     }

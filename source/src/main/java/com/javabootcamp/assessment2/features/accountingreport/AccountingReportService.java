@@ -9,6 +9,7 @@ import com.javabootcamp.assessment2.features.filetransfer.SftpFileTransferServic
 import com.javabootcamp.assessment2.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Service
 public class AccountingReportService {
@@ -45,27 +47,24 @@ public class AccountingReportService {
     }
 
     @Async
-    public CompletableFuture<AccountingReport> processAccountingReport(Date adjustDate) throws ExecutionException, InterruptedException {
+    public Future<AccountingReport> processAccountingReport(Date adjustDate) {
+        var assets = assetRepository.findAllByInsertedDate(adjustDate);
+        AccountingReport result = new AccountingReport();
+        result.setAdjustDate(adjustDate);
+        var data = assets.stream()
+                .map(x -> mapToStringArray(x))
+                .toList();
+        InputStream csvFile = null;
+        csvFile = fileGeneratorService.createFile(data);
+        var success = false;
+        if (csvFile != null) {
+            var dateString = DateUtil.convertDateToString(adjustDate, "yyyymmdd");
+            success = fileTransferService.uploadFile(csvFile, "/departments/accounting/" + dateString + ".csv");
+        }
+        result.setStatus(success ? BatchStatus.Success : BatchStatus.Fail);
+        accountingReportRepository.save(result);
 
-        var task = assetRepository.findAllByInsertedDate(adjustDate)
-                .thenApply(assets -> {
-                    AccountingReport result = new AccountingReport();
-                    result.setAdjustDate(adjustDate);
-                    var data = assets.stream()
-                            .map(x -> mapToStringArray(x))
-                            .toList();
-                    InputStream csvFile = null;
-                    csvFile = fileGeneratorService.createFile(data);
-                    var success = false;
-                    if (csvFile != null) {
-                        var dateString = DateUtil.convertDateToString(adjustDate, "yyyymmdd");
-                        success = fileTransferService.uploadFile(csvFile, "/departments/accounting/" + dateString + ".csv");
-                    }
-                    result.setStatus(success ? BatchStatus.Success : BatchStatus.Fail);
-                    return result;
-                });
-        accountingReportRepository.save(task.get());
-        return task;
+        return new AsyncResult<>(result);
     }
 
     private String[] mapToStringArray(Asset asset) {

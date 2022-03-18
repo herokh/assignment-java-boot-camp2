@@ -10,7 +10,6 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public interface AssetRepository extends JpaRepository<Asset, UUID> {
-    @Async
-    CompletableFuture<List<Asset>> findAllByInsertedDate(Date insertedDate);
+    List<Asset> findAllByInsertedDate(Date insertedDate);
     List<Asset> findAllByShipmentId(UUID shipmentId);
 }
