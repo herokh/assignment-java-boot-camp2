@@ -5,7 +5,7 @@
 ![use-cases-2](https://user-images.githubusercontent.com/20500388/158007469-fdfba88b-51c0-44d9-b7be-31bb3d23f5d3.png)
 
 ## Entity overview
-![entity-overview](https://user-images.githubusercontent.com/20500388/158016750-37056c3c-fc70-4e96-ac18-2b97d96f4ee5.png)
+![entity-overview](https://user-images.githubusercontent.com/20500388/158946158-3d951034-1417-43de-87c1-78da6f48869d.png)
 
 
 ## API Design
